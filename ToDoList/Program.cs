@@ -5,35 +5,36 @@ using ToDoList.Models;
 
 namespace ToDoList
 {
-    class Program
+  class Program
+  {
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllersWithViews();
+      WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<ToDoListContext>(
-              dbContextOptions => dbContextOptions
-                .UseMySql(
-                  builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
-                )
-              )
-            );
+      builder.Services.AddControllersWithViews();
 
-            WebApplication app = builder.Build();
+      builder.Services.AddDbContext<ToDoListContext>(
+                        dbContextOptions => dbContextOptions
+                          .UseMySql(
+                            builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
+                          )
+                        )
+                      );
 
-            // app.UseDeveloperExceptionPage();
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+      WebApplication app = builder.Build();
 
-            app.UseRouting();
+      // app.UseDeveloperExceptionPage();
+      app.UseHttpsRedirection();
+      app.UseStaticFiles();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+      app.UseRouting();
 
-            app.Run();
-        }
+      app.MapControllerRoute(
+          name: "default",
+          pattern: "{controller=Home}/{action=Index}/{id?}");
+
+      app.Run();
     }
+  }
 }
